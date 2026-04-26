@@ -1,36 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>PUBG Shop</title>
+  <title>PUBG Sens Shop</title>
 
+  <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
   <style>
     body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
       background: #0f172a;
       color: white;
-      font-family: Arial;
       text-align: center;
-      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
     }
 
     .card {
       background: #1e293b;
       padding: 20px;
-      margin: 15px;
-      border-radius: 12px;
+      border-radius: 15px;
+      margin: 10px auto;
+      max-width: 400px;
     }
 
     button {
       width: 100%;
       margin-top: 10px;
-      padding: 12px;
+      padding: 14px;
       border-radius: 10px;
       border: none;
       font-size: 16px;
-      color: white;
       cursor: pointer;
+      color: white;
     }
 
     .buy {
@@ -62,29 +69,35 @@
     С другом -10% → 900₽
   </button>
 
-  <button class="back" onclick="Telegram.WebApp.close()">
+  <button class="back" onclick="closeApp()">
     ⏪ Назад
   </button>
 </div>
 
 <script>
-  Telegram.WebApp.ready();
+  function init() {
+    const tg = window.Telegram?.WebApp;
 
-  function buy(type) {
-    Telegram.WebApp.sendData(type);
+    if (!tg) return;
+
+    tg.ready();
+    tg.expand();
+
+    window.buy = function(type) {
+      tg.sendData(type);
+    };
+
+    window.closeApp = function() {
+      tg.close();
+    };
+  }
+
+  if (document.readyState === "complete") {
+    init();
+  } else {
+    window.addEventListener("load", init);
   }
 </script>
 
 </body>
 </html>
-<script>
-  window.addEventListener("load", () => {
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-  });
-
-  function buy(type) {
-    window.Telegram.WebApp.sendData(type);
-  }
-</script>
