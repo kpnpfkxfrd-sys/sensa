@@ -77,9 +77,14 @@
 
 </body>
 </html>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-  const tg = window.Telegram.WebApp;
-  tg.ready();
-  tg.expand();
+  window.addEventListener("load", () => {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+  });
+
+  function buy(type) {
+    window.Telegram.WebApp.sendData(type);
+  }
 </script>
